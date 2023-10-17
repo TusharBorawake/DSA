@@ -1,0 +1,74 @@
+Question - Check if the given string S is a Pangram or not. 
+
+****************************************************************************************
+
+What is Pangram String?
+--> A pangram is a sentence containing every letter in the English Alphabet.
+
+*****************************************************************************************
+Solution - So idea is, in Java we have Set (Set is an unordered collection of items in which duplicate items cannot be stored). So we will create an empty Hashset and then we will add 'Characters of a string one by one in a Hashset' and at last we will check whether the size of Hashset is equal to 26 (A to Z there are 26 Alphabets). If size is equal to 26 then it means the Given string contains all the Alphabets from a to z and hence the string is a 'Panagram' else the string is not a pangram.
+
+********************************************************************************************
+Code
+********************************************************************************************
+
+//{ Driver Code Starts
+//Initial Template for Java
+
+import java.io.*;
+import java.util.*;
+
+class GFG {
+    public static void main(String args[]) throws IOException {
+        BufferedReader read =
+            new BufferedReader(new InputStreamReader(System.in));
+        int t = Integer.parseInt(read.readLine());
+        while (t-- > 0) {
+            String S = read.readLine();
+            
+            Solution ob = new Solution();
+            System.out.println(ob.isPanagram(S));
+        }
+    }
+}
+// } Driver Code Ends
+
+
+//User function Template for Java
+
+class Solution {
+    int isPanagram(String S) {
+        // code here
+        S = S.toLowerCase(); // This is a mandatory line. If we don't write this statement then the same Alphabet will be added twice because, for ex. 'A' and 'a' are two different alphabets because of case-sensitivity hence the size of Set will be more than 26 and hence we will get wrong results.
+        
+        Set<Character> mySet = new HashSet<>();
+        
+        for(int i=0; i<S.length(); i++){
+            /*if(Character.isAlphabetic(S.charAt(i))){ // If character is an alphabet then add it to set
+                mySet.add(S.charAt(i));
+            }
+            else{ // Otherwise don't add it to set
+                continue;
+            }*/
+            
+            // OR
+            if(S.charAt(i) >= 'A' && S.charAt(i) <= 'Z' || S.charAt(i) >= 'a' && S.charAt(i) <= 'z'){
+                mySet.add(S.charAt(i));
+            }
+            else{
+                continue;
+            }
+        }
+        
+        if(mySet.size() == 26){ // All alphabets present
+            return 1;
+        }
+        else{ // All alphabets not present
+            return 0;
+        }
+    }
+}
+
+
+
+
