@@ -1,0 +1,53 @@
+Question - Given an input string s, reverse the order of the words. 
+A word is defined as a sequence of non-space characters. The words in s will be separated by at least one space.
+Return a string of the words in reverse order concatenated by a single space.
+Note that s may contain leading or trailing spaces or multiple spaces between two words. The returned string should only have a single space separating the words. Do not include any extra spaces.
+
+Ex 1
+Input: s = "the sky is blue"
+Output: "blue is sky the"
+
+Ex 2
+Input: s = "  hello world  "
+Output: "world hello"
+Explanation: Your reversed string should not contain leading or trailing spaces.
+
+Ex 3
+Input: s = "a good   example"
+Output: "example good a"
+Explanation: You need to reduce multiple spaces between two words to a single space in the reversed string.
+
+**********************************************************************************************************************************************
+
+Code
+**********************************************************************************************************************************************
+
+import java.util.*;
+
+class Solution {
+    public String reverseWords(String s) {
+        // Given String may contain leading or trailing whitespaces so we wil remove those spaces using .trim() method
+
+        s = s.trim();
+
+        // String may contain multiple whitespaces between two words so we need to handle it. Otherwise we will get incorrect results
+
+        String[] arrayOfWords = s.split("\\s+"); /* We use the split("\\s+") method to split the string into words. This regex pattern '\s+' matches one or more whitespace characters (including spaces). **Note** - \\s is used only for matching single whitespace */
+
+        StringBuilder sb = new StringBuilder();
+
+        for(int i= arrayOfWords.length - 1; i>=0; i--){
+           sb.append(arrayOfWords[i]);
+
+           if(i>0){
+               sb.append(" "); // We will add the whitespace between words only when it is not the last word
+           }           
+        }
+
+        return sb.toString();
+    }
+}
+
+
+
+
