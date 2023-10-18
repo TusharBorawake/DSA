@@ -1,0 +1,66 @@
+Question - Reverse words in a given string
+*******************************************************************
+
+Description- Given a String S, reverse the string without reversing its individual words. Words are separated by dots.
+
+Ex.
+Input:
+S = i.like.this.program.very.much
+
+Output: much.very.program.this.like.i
+
+Explanation: After reversing the wholestring(not individual words), the inputstring becomes
+much.very.program.this.like.i
+*********************************************************************************************************
+
+Code
+***********************
+
+//{ Driver Code Starts
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        while (t > 0) {
+            String s = sc.next();
+            Solution obj = new Solution();
+            System.out.println(obj.reverseWords(s));
+            t--;
+        }
+    }
+}
+
+// } Driver Code Ends
+
+
+
+class Solution 
+{
+    //Function to reverse words in a given string.
+    String reverseWords(String S)
+    {
+        // code here
+        /*In order to use the dot literally, you need to escape it like \. but again a backslash also requires escaping in Java, you should give \\. i.e. double backslash*/
+        
+        String[] arrayOfWords = S.split("\\."); /* Dot is a special character in Java so we can't write it like S.split('.'). To use the dot character explicitly we need to write it as '\\.' or '[.]' */
+
+        StringBuilder sb = new StringBuilder();
+        
+        for(int i= arrayOfWords.length - 1; i>=0; i--){
+            if(i>0){ // Add word + . in StringBuilder
+                sb.append(arrayOfWords[i] + ".");
+            }
+            else{ // Don't Add '.' in StringBuilder if it is the last word from an array of words beacuse we don't want the dot after last word
+                sb.append(arrayOfWords[i]);
+            }
+        }
+        
+        String reverse = sb.toString();
+        
+        return reverse;
+    }
+}
