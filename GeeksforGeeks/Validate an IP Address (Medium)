@@ -1,0 +1,128 @@
+Question - Validate an IP Address 
+***********************************
+
+Description- 
+Write a program to Validate an IPv4 Address.
+According to Wikipedia, IPv4 addresses are canonically represented in dot-decimal notation, which consists of four decimal numbers, each ranging from 0 to 255, separated by dots, e.g., 172.16.254.1 .
+A valid IPv4 Address is of the form x1.x2.x3.x4 where 0 <= (x1, x2, x3, x4) <= 255.
+Thus, we can write the generalized form of an IPv4 address as (0-255).(0-255).(0-255).(0-255).
+Note: Here we are considering numbers only from 0 to 255 and any additional leading zeroes will be considered invalid.
+
+Your task is to complete the function isValid which returns 1 if the given IPv4 address is valid else returns 0. The function takes the IPv4 address as the only argument in the form of string.
+
+Ex 1
+
+Input:
+IPv4 address = 222.111.111.111
+Output: 1
+Explanation: Here, the IPv4 address is as
+per the criteria mentioned and also all
+four decimal numbers lies in the mentioned
+range.
+
+Ex 2
+
+Input:
+IPv4 address = 5555..555
+Output: 0
+Explanation: 5555..555 is not a valid
+IPv4 address, as the middle two portions
+are missing.
+
+Ex 3
+
+Input:
+IPv4 address = 0.0.0.0.
+Output: 0
+Explanation: It contain a leading dot character at last. In valid IPv4 address there can be maximum 3 dots.
+
+*************************************************************************************************************
+
+Code
+****************************************************************************************************************
+
+//{ Driver Code Starts
+// Initial Template for Java
+
+// Initial Template for Java
+
+import java.util.*;
+import java.io.*;
+
+  public class validip {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+
+        while (t-- > 0) {
+            String s = sc.next();
+            Solution obj = new Solution();
+
+            if (obj.isValid(s))
+                System.out.println(1);
+            else
+                System.out.println(0);
+        }
+    }
+}
+// } Driver Code Ends
+
+
+// User function Template for Java
+
+/*
+        Algorithm -
+        1) Split the given string using separator as Dot (.)
+        2) Check if there are exactly 4 parts present in a given string. If not then the given IP address is not a valid IP address, so return false else do further processing.
+        3) Now if there are exactly 4 parts present in a given string then for each part we will do further processing:
+            i) Use try catch block because even if there are 4 parts present there might be a situation where the part contains the data other than pure number. Ex "abc123". so if we try to convert this part into an Integer then we will get NumberFormatException hence use try catch block.
+            ii) Now using Integer.parseInt() method we will convert the each part into Integer.
+                a) If we successfully convert string part into Integer then firstly we will check if the number is not less than 0 and not more than 255. If this case fails then we will return false.
+                b) Next we will check if there are any eading Zeros in the Integer if leading zeros are present then return false.
+        and if all this cases fails then it means that our IP adderess is Valid. so will return true.
+*/
+
+class Solution {
+
+    public boolean isValid(String s) {
+        // Write your code here
+        String[] arr = s.split("\\."); // 1
+        
+        // Counting the number of dots present in a given string
+        int dotCount = 0;
+        
+        for(int i=0; i<s.length(); i++){
+            if(s.charAt(i) == '.'){ // If character is a dot then increase the dot count by 1
+                dotCount++;
+            }
+        }
+        
+        if(arr.length != 4 || dotCount > 3){ // 2 // If IP address is not having length equal to 4. Now in valid IP address we know that there will be exact 3 dots or maximum 3 dots present so if we have more than 3 dots then also will return false
+            
+            return false;
+        }
+        
+        for(String part : arr){ // 3
+            try{ // 3 i
+                int converted = Integer.parseInt(part); // 3 ii
+                
+                if(converted < 0 || converted > 255){ // 3 ii a
+                    return false;
+                }
+                
+                if(part.length() > 1 && part.startsWith("0")){ // 3 ii b
+                    return false;
+                }
+                
+            }
+            catch(NumberFormatException e){ // If the given string is not a pure Integer
+                return false;
+            }
+        }
+        return true; // Valid IP address
+    }
+}
+
+
