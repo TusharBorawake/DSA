@@ -1,0 +1,116 @@
+Question - Convert String to Integer (Implement Atoi) (Medium)
+
+****************************************************************************
+
+Description -
+Your task  is to implement the function atoi. The function takes a string(str) as argument and converts it to an integer and returns it.
+
+Note: You are not allowed to use inbuilt function.
+
+Example 1:
+
+Input:
+str = 123
+Output: 123
+Example 2:
+
+Input:
+str = 21a
+Output: -1
+Explanation: Output is -1 as all characters are not digit only.
+
+******************************************************************************************************
+
+Code - 
+*******************************************************************************************************
+
+//{ Driver Code Starts
+//Initial template for JAVA
+
+import java.util.Scanner;
+
+class aToi
+{
+	public static void main(String args[])
+	{
+		Scanner sc = new Scanner(System.in);
+		int t = sc.nextInt();
+		sc.nextLine();
+		while(t>0)
+		{
+			String str = sc.nextLine();
+			
+			Solution obj = new Solution();
+			int num = obj.atoi(str);
+			
+			System.out.println(num);
+		t--;
+		}
+	}
+}
+// } Driver Code Ends
+
+
+//User function template for JAVA
+
+/*You are required to complete this method */
+class Solution
+{
+    int atoi(String str) {
+	// Your code here
+	
+	// Step 1 : Check whether number starts with -ve sign i.e. the number is negative
+	
+	boolean isNegative = false;
+	int index = 0;
+	
+	if(str.charAt(0) == '-'){ // Check for negative sign at index 0
+	    isNegative = true;
+	    index++; // If negative sign found at index 0 then we will start the further processing of next digits from index 1
+	}
+	
+	// Step 2 : further processing
+	int number = 0; // Let's say initially the number is Zero
+	
+	for(int i=index; i<str.length(); i++){
+	    if(str.charAt(i)>='0' && str.charAt(i)<='9'){ // Means the character is a digit or number
+	        int actualDigit = str.charAt(i) - '0'; // If it's a valid digit character, subtract the ASCII value of '0' from the character's ASCII value to get the actual numeric value.
+	        number = number * 10 + actualDigit; // Explanation at last
+	    }
+	    else{ // Given string contains character other than digit
+	        return -1;
+	    }
+	}
+	
+	if(isNegative){ // If isNegative is true then we will just add -ve sign at the start of a number
+	    number = -number;
+	}
+	
+	return number; // If the number is +ve then we will just return the number as it is
+    }
+}
+
+
+/*
+
+Lets say the given string is "456"
+
+number = number * 10 + actualDigit;
+
+let's say number is 0 at start and actual digit is 4
+
+number = 0 * 10 + 4;
+number = 4
+
+next, actual digit is 5
+number = number * 10 + actualDigit;
+number = 4 * 10 + 5;
+number = 40 + 5 = 45
+
+next, actual digit is 6
+number = number * 10 + actualDigit;
+number = 45 * 10 + 6;
+number = 450 + 6 = 456  <-- That's the answer
+
+*/
+
