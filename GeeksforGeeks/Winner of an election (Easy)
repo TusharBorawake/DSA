@@ -1,0 +1,91 @@
+Question - Winner of an election
+
+*****************************************************************************************************************************************
+
+Description -
+
+Given an array of names (consisting of lowercase characters) of candidates in an election. A candidate name in array represents a vote casted to the candidate. Print the name of candidate that received Max votes. If there is tie, print lexicographically smaller name. 
+
+(Note - Lexicographically smaller means that when two strings are compared, the one with the smaller character at the first differing position is considered smaller. In other words, the string that comes first in alphabetical order is considered lexicographically smaller.)
+
+Example 1:
+
+Input:
+n = 13
+Votes[] = {john,johnny,jackie,johnny,john,jackie,jamie,jamie,john,johnny,jamie,johnny,john}
+Output: john 4
+Explanation: john has 4 votes casted for him, but so does johny. john is lexicographically smaller, so we print john and the votes he received.
+
+Example 2:
+
+Input:
+n = 3
+Votes[] = {andy,blake,clark}
+Output: andy 1
+Explanation: All the candidates get 1 votes each. We print andy as it is lexicographically smaller.
+
+*****************************************************************************************************************************************
+
+Code -
+
+*****************************************************************************************************************************************
+
+class Solution
+{
+    //Function to return the name of candidate that received maximum votes.
+    public static String[] winner(String arr[], int n)
+    {
+        // add your code
+        
+        // Here we will store the name of candidate and its vote count
+        HashMap<String, Integer> map = new HashMap<>();
+        
+        for(int i=0; i<arr.length; i++){
+            if(map.containsKey(arr[i])){
+                map.put(arr[i], map.get(arr[i]) + 1);
+            }
+            else{
+                map.put(arr[i], 1);
+            }
+        }
+        
+        // Lets suppose initially the maxVotes are 0.
+        int maxVote = 0;
+        String winnerCandidate = "";
+        
+        // Now we will iterate through the keys of HashMap
+        for(String candidateName : map.keySet()){
+            int currentVote = map.get(candidateName);
+            if(currentVote > maxVote || (currentVote == maxVote && candidateName.compareTo(winnerCandidate) < 0)){ // Explanation at last
+                maxVote = currentVote;
+                winnerCandidate = candidateName;
+            }
+        }
+        
+        String maxVoteInString = Integer.toString(maxVote); // Converting integer votes to string as we want to return string array
+        
+        String[] electionWinnerDetails = {winnerCandidate, maxVoteInString};
+        
+        return electionWinnerDetails;
+        
+    }
+}
+
+/*
+
+In the line `candidateName.compareTo(winnerCandidate) < 0`, the `< 0` is a comparison that checks whether `candidateName` comes lexicographically before `winnerCandidate`. 
+
+Here's how it works:
+
+- If `candidateName` is lexicographically smaller (i.e., it comes before) `winnerCandidate`, then `candidateName.compareTo(winnerCandidate)` returns a negative value (less than 0).
+- If `candidateName` is lexicographically equal to `winnerCandidate`, then `candidateName.compareTo(winnerCandidate)` returns 0.
+- If `candidateName` is lexicographically greater (i.e., it comes after) `winnerCandidate`, then `candidateName.compareTo(winnerCandidate)` returns a positive value (greater than 0).
+
+So, in the context of your code, when there is a tie in the number of votes (i.e., `currentVote` is equal to `maxVote`), the `candidateName.compareTo(winnerCandidate) < 0` part ensures that if there are multiple candidates with the same maximum vote count, the one with the lexicographically smaller name will be selected as the winner.
+
+
+*/
+
+
+
+
