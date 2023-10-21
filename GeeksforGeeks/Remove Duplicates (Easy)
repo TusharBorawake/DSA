@@ -1,0 +1,82 @@
+Question - Remove Duplicates
+
+*****************************************************************************************************************************
+
+Description - Given a string without spaces, the task is to remove duplicates from it.
+
+Note: The original order of characters must be kept the same. 
+
+Example 1:
+
+Input: S = "zvvo"
+Output: "zvo"
+Explanation: Only keep the first occurrence
+
+Example 2:
+
+Input: S = "gfg"
+Output: gf
+Explanation: Only keep the first occurrence
+
+*****************************************************************************************************************************************
+
+Code -
+
+******************************************************************************************************************************************
+
+//{ Driver Code Starts
+//Initial Template for Java
+
+import java.io.*;
+import java.util.*;
+
+class GFG {
+    public static void main(String args[]) throws IOException {
+        BufferedReader read =
+            new BufferedReader(new InputStreamReader(System.in));
+        int t = Integer.parseInt(read.readLine());
+        while (t-- > 0) {
+            String s = read.readLine();
+            
+            Solution ob = new Solution();
+            String result = ob.removeDups(s);
+            
+            System.out.println(result);
+        }
+    }
+}
+// } Driver Code Ends
+
+
+//User function Template for Java
+
+class Solution {
+    String removeDups(String S) {
+        // code here
+        /*
+        
+        1) Step 1 : Now to remove the duplicates we can use 'Set' (as set is an unordered collection of unique items). Note "unordered"
+        2) So we have LinkedHashSet --> "LinkedHashSet maintains a linked list of the entries in the set, in the order in which they were inserted. This allows insertion-order iteration over the set. That is, when cycling through a LinkedHashSet using an iterator, the elements will be returned in the order in which they were inserted."
+        3) LinkedHashSet --> "The LinkedHashSet is an 'ordered' version of HashSet that maintains a doubly-linked List across all elements. When the iteration order is needed to be maintained this class is used."
+        4) Step 2 : Add elements from a given string into a LinkedHashSet
+        5) Step 3 : Create a StringBuilder and then will append it with the Characters from LinkedHashSet
+        6) Step 4 : Return the final StringBuilder but by using .toString() method so that the final output will be a string.
+        
+        */
+        
+        
+        LinkedHashSet<Character> mySet = new LinkedHashSet<>(); // 1
+        
+        for(int i=0; i<S.length(); i++){
+            mySet.add(S.charAt(i)); // 2
+        }
+        
+        StringBuilder sb = new StringBuilder(); // 3
+        
+        for(Character ch : mySet){
+            sb.append(ch); // 3
+        }
+        
+        return sb.toString(); // 4
+    }
+}
