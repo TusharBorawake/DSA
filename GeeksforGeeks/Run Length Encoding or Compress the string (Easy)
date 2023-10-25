@@ -1,0 +1,145 @@
+Question - Run Length Encoding 
+
+******************************************************************************************************************
+
+Description - 
+
+Given a string, Your task is to  complete the function encode that returns the run length encoded string for the given string.
+eg if the input string is “wwwwaaadexxxxxx”, then the function should return “w4a3d1e1x6″.
+You are required to complete the function encode that takes only one argument the string which is to be encoded and returns the encoded string.
+
+Example 1:
+
+Input:
+str = aaaabbbccc
+Output: a4b3c3
+Explanation: a repeated 4 times consecutively b 3 times, c also 3 times.
+
+Example 2:
+
+Input:
+str = abbbcdddd
+Output: a1b3c1d4
+
+Example 3:
+
+Input:
+str = abbbcddddebbac
+Output: a1b3c1d4e1b2a1c1
+
+***********************************************************************************************************************************************
+
+Code - 
+
+***********************************************************************************************************************************************
+
+class GfG
+ {
+	String encode(String str)
+	{
+          //Your code here
+          
+          StringBuilder sb = new StringBuilder();
+          
+          char currentCharacter;
+          int currentCharacterCount = 1;
+          
+          for(int i=0; i<str.length() - 1; i++){
+              currentCharacter = str.charAt(i);
+              
+              if((str.charAt(i)) == (str.charAt(i+1))){
+                  currentCharacterCount++;
+              }
+              else{
+                  String ch1 = Character.toString(currentCharacter);
+                  String count = Integer.toString(currentCharacterCount);
+                  sb.append(ch1 + count);
+                  currentCharacterCount = 1;
+              }
+          }
+          
+          // Append the last character and its count
+          String ch1 = Character.toString(str.charAt(str.length() - 1));
+          String count = Integer.toString(currentCharacterCount);
+          sb.append(ch1 + count);
+          
+          return sb.toString();
+          
+	}
+ }
+
+
+
+
+
+
+***********************************************************************************************************************************************
+
+# Asked in CGI Group
+Question - Compress the string
+
+***********************************************************************************************************************************************
+
+Description -
+
+Ninja has been given a program to do basic string compression. For a character that is consecutively repeated more than once, he needs to 
+replace the consecutive duplicate occurrences with the count of repetitions.
+
+Ex. - If a string has 'x' repeated 5 times, replace this "xxxxx" with "x5". The string is compressed only when the repeated character count is more than 1.
+***********************************************************************************************************************************************
+
+Code -
+
+***********************************************************************************************************************************************
+
+public class Main
+{
+    String compressString(String inputString){
+        StringBuilder sb = new StringBuilder();
+        
+        int currentCharCount = 1;
+        
+        for(int i=0; i<inputString.length() - 1; i++){
+            char currentCharacter = inputString.charAt(i);
+            
+            if(inputString.charAt(i) == inputString.charAt(i+1)){
+                currentCharCount++;
+            }
+            else{
+                if(currentCharCount == 1){ // If character only occurs once then will append the character only and not its count to StringBuilder
+                    sb.append(currentCharacter);
+                }
+                else{ // If character occurs more than once then will append the character and its count to StringBuilder
+                    sb.append(currentCharacter);
+                    sb.append(currentCharCount);
+                    currentCharCount = 1; // Resetting the currentCharCount to 1 for next characters
+                }
+            }
+        }  
+        
+        char lastCharacter = inputString.charAt(inputString.length() - 1);
+        
+        if(currentCharCount == 1){
+            sb.append(lastCharacter);
+        }
+        else{
+            sb.append(lastCharacter);
+            sb.append(currentCharCount);
+        }
+        
+        return sb.toString();
+    }
+    
+	public static void main(String[] args) {
+	    Main obj = new Main();
+	    String outputString = obj.compressString("aasdfcccvvvbbnnm");
+	    System.out.println(outputString);
+	}
+}
+
+
+Expected Output - a2sdfc3v3b2n2m
+Actual Output - a2sdfc3v3b2n2m
+
+
+
