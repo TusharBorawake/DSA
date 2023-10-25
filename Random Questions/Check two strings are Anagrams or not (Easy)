@@ -1,0 +1,83 @@
+Question - Anagrams
+
+*************************************************************************************************************************************************
+
+Description - 
+You would be given two strings. You have to tell whether these strings form an anagram pair or not. The strings form an anagram pair if the letters of one string can be rearranged to form another string.
+
+Anagrams are defined as words or names that can be formed by rearranging letters of another word. Such as "spar" can be formed by rearranging letters of "rasp". Hence, "spar" and "rasp" are anagrams.
+Other examples include:
+'triangle' and 'integral' 'listen' and 'silent'
+
+*************************************************************************************************************************************************
+
+Code -
+
+*************************************************************************************************************************************************
+
+import java.util.*;
+
+public class Main
+{
+    boolean areAnagrams(String str1, String str2){
+        HashMap<Character, Integer> str1map = new HashMap<>();
+        HashMap<Character, Integer> str2map = new HashMap<>();
+        
+        if(str1.length() != str2.length()){ // If length of both the strings is not equal then they are 100% not Anagrams
+            return false;
+        }
+        else{ // If length of both the strings is equal
+        
+            // Step 1: Fill the HashMap 1 i.e. str1map with the Character and its count from str1
+        
+            for(int i=0; i<str1.length(); i++){ 
+                if(str1map.containsKey(str1.charAt(i))){
+                    str1map.put(str1.charAt(i), str1map.get(str1.charAt(i)) + 1);
+                }
+                else{
+                    str1map.put(str1.charAt(i), 1);
+                }
+            }
+            
+            // Step 2: Fill the HashMap 2 i.e. str2map with the Character and its count from str2
+            
+            for(int i=0; i<str2.length(); i++){
+                if(str2map.containsKey(str2.charAt(i))){
+                    str2map.put(str2.charAt(i), str2map.get(str2.charAt(i)) + 1);
+                }
+                else{
+                    str2map.put(str2.charAt(i), 1);
+                }
+            }
+        }
+        
+        // Step 3 : Iterating through the keys of HashMap 1 i.e. str1map
+        
+        for(Character ch : str1map.keySet()){
+            if(str2map.containsKey(ch)){ // If the key of HashMap 1 i.e. str1map is present in HashMap 2 i.e. str2map
+                int charCountInstr1 = str1map.get(ch); // Get count of current Character from str1map
+                int charCountInstr2 = str2map.get(ch); // Get count of the same Character from str2map
+                
+                if(charCountInstr1 == charCountInstr2){ // If Character count for current Character is same then continue and check for next Characters till last
+                    continue;
+                }
+                else{ // If Character count for current Character is not same then strings are not Anagrams
+                    return false;
+                }
+            }
+            else{ // If the key of HashMap 1 i.e. str1map is not present in HashMap 2 i.e. str2map
+                return false; // Means both the strings have at least one different character even when the length of both strings is equal
+            }
+        }
+        
+        return true; // Both the strings are Anagrams
+    }
+	public static void main(String[] args) {
+	    Main obj = new Main();
+	    boolean result = obj.areAnagrams("triangle", "integral"); // Expected and Actual Output - true
+	    
+	    System.out.println(result);
+	}
+}
+
+
