@@ -1,0 +1,128 @@
+Question - Valid Anagram  (Two Solutions)
+
+**********************************************************************************************************************************************
+
+Description - 
+Given two strings s and t, return true if t is an anagram of s, and false otherwise.
+
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+Example 1:
+
+Input: s = "anagram", t = "nagaram"
+Output: true
+Example 2:
+
+Input: s = "rat", t = "car"
+Output: false
+
+**********************************************************************************************************************************************
+
+Code - 
+
+**********************************************************************************************************************************************
+
+// Solution 1
+
+/*
+Algorithm: - 
+1) Convert both the strings to char array.
+2) Sort both the character arrays using Arrays.sort()
+3) if size of both the strings is same then using Arrays.equals(array1, array2) method we will compare contents of both the arrays and if everything is ok then it's an 'Anagram' else, not an anagram.
+4) if size of both the strings is not equal or same then directly return false i.e. it's not an anagram.
+
+ */
+
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        char[] sCharacterArray = s.toCharArray(); // Step 1
+        char[] tCharacterArray = t.toCharArray(); // Step 1
+        
+        Arrays.sort(sCharacterArray); // Step 2
+        Arrays.sort(tCharacterArray); // Step 2
+
+        int sizeOfStrings = s.length();
+        int sizeOfStringt = t.length();
+
+        boolean flag = false; // you can write true or false any one.
+
+        if(sizeOfStrings == sizeOfStringt){ // Step 3
+            if(Arrays.equals(sCharacterArray, tCharacterArray)){
+                flag = true;
+            }
+
+            else{
+                flag = false;
+            }
+        }
+        else{ // Step 4
+            flag = false;
+        }
+
+        return flag;
+    }
+}
+
+
+
+**********************************************************************************************************************************************
+**********************************************************************************************************************************************
+
+// Solution 2
+
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        HashMap<Character, Integer> str1map = new HashMap<>();
+        HashMap<Character, Integer> str2map = new HashMap<>();
+        
+        if(s.length() != t.length()){ // If length of both the strings is not equal then they are 100% not Anagrams
+            return false;
+        }
+        else{ // If length of both the strings is equal
+        
+            // Step 1: Fill the HashMap 1 i.e. str1map with the Character and its count from str1
+        
+            for(int i=0; i<s.length(); i++){ 
+                if(str1map.containsKey(s.charAt(i))){
+                    str1map.put(s.charAt(i), str1map.get(s.charAt(i)) + 1);
+                }
+                else{
+                    str1map.put(s.charAt(i), 1);
+                }
+            }
+            
+            // Step 2: Fill the HashMap 2 i.e. str2map with the Character and its count from str2
+            
+            for(int i=0; i<t.length(); i++){
+                if(str2map.containsKey(t.charAt(i))){
+                    str2map.put(t.charAt(i), str2map.get(t.charAt(i)) + 1);
+                }
+                else{
+                    str2map.put(t.charAt(i), 1);
+                }
+            }
+        }
+        
+        // Step 3 : Iterating through the keys of HashMap 1 i.e. str1map
+        
+        for(Character ch : str1map.keySet()){
+            if(str2map.containsKey(ch)){ // If the key of HashMap 1 i.e. str1map is present in HashMap 2 i.e. str2map
+                int charCountInstr1 = str1map.get(ch); // Get count of current Character from str1map
+                int charCountInstr2 = str2map.get(ch); // Get count of the same Character from str2map
+                
+                if(charCountInstr1 == charCountInstr2){ // If Character count for current Character is same then continue and check for next Characters till last
+                    continue;
+                }
+                else{ // If Character count for current Character is not same then strings are not Anagrams
+                    return false;
+                }
+            }
+            else{ // If the key of HashMap 1 i.e. str1map is not present in HashMap 2 i.e. str2map
+                return false; // Means both the strings have at least one different character even when the length of both strings is equal
+            }
+        }
+        
+        return true; // Both the strings are Anagrams
+    }
+}
+
